@@ -21,7 +21,8 @@ nav{
 main{
     background-color:#1E536E;
     color: #4EEFD9;
-    padding: 400px;
+    padding-left: 10px;
+    padding-right: 10px;
     
 
 }
@@ -78,3 +79,4 @@ a{
   color:#4EEFD9;
 
 }
+
