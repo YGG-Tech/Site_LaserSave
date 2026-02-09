@@ -1,0 +1,325 @@
+contato.html: <!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="utf-8">
+    <title>Perfect Shoes</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <!-- Estilo Personalizado -->
+    <link rel="stylesheet" type="text/css" href="../CSS/estilo.css">
+
+    <script>
+        // Função para aplicar máscara ao CPF
+        function aplicarMascaraCPF(cpf) {
+            cpf = cpf.replace(/\D/g, ""); // Remove tudo que não for número
+            cpf = cpf.replace(/(\d{3})(\d)/, "$1.$2"); // Adiciona o ponto
+            cpf = cpf.replace(/(\d{3})(\d)/, "$1.$2"); // Adiciona o ponto
+            cpf = cpf.replace(/(\d{3})(\d{1,2})$/, "$1-$2"); // Adiciona o traço
+            return cpf;
+        }
+
+        // Função para aplicar máscara ao CEP
+        function aplicarMascaraCEP(cep) {
+            cep = cep.replace(/\D/g, ""); // Remove tudo que não for número
+            cep = cep.replace(/^(\d{5})(\d{3})$/, "$1-$2"); // Adiciona o hífen no CEP
+            return cep;
+        }
+
+        // Função de validação do formulário
+        function valida() {
+            let nome = document.getElementById("nome").value.trim();
+            let email = document.getElementById("email").value.trim();
+            let senha = document.getElementById("senha").value.trim();
+            let cpf = document.getElementById("cpf").value.trim();
+            let endereco = document.getElementById("endereco").value.trim();
+            let cep = document.getElementById("cep").value.trim();
+
+            if (nome.length < 3 || nome === "") {
+                alert("Volte ao campo nome e digite corretamente.");
+                return false;
+            }
+            if (email.length < 3 || email === "") {
+                alert("Email incorreto, digite novamente.");
+                return false;
+            }
+            if (senha.length < 6 || senha === "") {
+                alert("Senha inválida, tente novamente.");
+                return false;
+            }
+            if (cpf.length < 10 || cpf === "") {
+                alert("CPF inválido, tente novamente.");
+                return false;
+            }
+            if (endereco.length < 3 || endereco === "") {
+                alert("Endereço inválido, tente novamente.");
+                return false;
+            }
+            if (cep.length < 8 || cep === "") {
+                alert("CEP inválido, tente novamente.");
+                return false;
+            }
+
+            let termos = document.getElementById("termos").checked;
+            if (!termos) {
+                alert("Você precisa aceitar os Termos e Condições.");
+                return false;
+            }
+
+            // Se todos os campos forem válidos
+            alert("Cadastro realizado com sucesso!");
+            return true;
+        }
+
+        // Função para validar CPF
+        function validaCPF(cpf) {
+            var Soma = 0;
+            var Resto;
+            var strCPF = cpf.replace(/[^\d]/g, ''); // Remove tudo que não é número
+
+            if (strCPF.length !== 11) return false;
+
+            if ([
+                '00000000000', '11111111111', '22222222222', '33333333333',
+                '44444444444', '55555555555', '66666666666', '77777777777',
+                '88888888888', '99999999999'
+            ].includes(strCPF)) return false;
+
+            // Primeiro dígito
+            for (let i = 1; i <= 9; i++) {
+                Soma += parseInt(strCPF.charAt(i - 1)) * (11 - i);
+            }
+            Resto = (Soma * 10) % 11;
+            if (Resto >= 10) Resto = 0;
+            if (Resto !== parseInt(strCPF.charAt(9))) return false;
+
+            // Segundo dígito
+            Soma = 0;
+            for (let i = 1; i <= 10; i++) {
+                Soma += parseInt(strCPF.charAt(i - 1)) * (12 - i);
+            }
+            Resto = (Soma * 10) % 11;
+            if (Resto >= 10) Resto = 0;
+
+            return Resto === parseInt(strCPF.charAt(10));
+        }
+
+        // Função para validar o formulário e o CPF
+        function validarFormulario() {
+            let cpf = document.getElementById("cpf").value;
+
+            if (!validaCPF(cpf)) {
+                alert("CPF inválido!");
+                return false; // impede envio
+            }
+
+            return true; // permite envio
+        }
+
+        // Chama as funções de máscara para os campos CPF e CEP enquanto o usuário digita
+        window.onload = function() {
+            document.getElementById('cpf').addEventListener('input', function () {
+                this.value = aplicarMascaraCPF(this.value);
+            });
+
+            document.getElementById('cep').addEventListener('input', function () {
+                this.value = aplicarMascaraCEP(this.value);
+            });
+
+            // Função para buscar o CEP usando a API ViaCEP
+            document.getElementById("cep").addEventListener("blur", function() {
+                let cep = this.value.replace(/\D/g, ''); // Remove tudo que não for número
+
+                if (cep.length !== 8) {
+                    alert("CEP inválido!");
+                    return;
+                }
+
+                fetch(`https://viacep.com.br/ws/${cep}/json/`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.erro) {
+                            alert("CEP não encontrado!");
+                            return;
+                        }
+
+                        // Preenche os campos automaticamente com os dados do CEP
+                        document.getElementById("endereco").value = data.logradouro;
+                        document.getElementById("bairro").value = data.bairro;
+                        document.getElementById("cidade").value = data.localidade;
+                        document.getElementById("estado").value = data.uf;
+                    })
+                    .catch(error => {
+                        alert("Erro ao consultar o CEP.");
+                        console.error(error);
+                    });
+            });
+        }
+    </script>
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header class="bg-warning text-white py-3">
+        <div class="container">
+            <div class="row align-items-center text-center text-md-start">
+                <div class="col-md-2 mb-2 mb-md-0">
+                    <img src="../Image/bota_2.jpg" width="70" height="50" alt="Logo">
+                </div>
+                <div class="col-md-10">
+                    <h2 class="fs-5 fst-italic" style="padding-left: 50px;">Perfect Shoes</h2>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active text-white" href="../HTML/Index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="#">Sobre Nós</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Produtos
+                        </a>
+                        <ul class="dropdown-menu bg-dark">
+                            <li><a class="dropdown-item text-white" href="../HTML/Produtos.html">Feminino</a></li>
+                            <li><a class="dropdown-item text-white" href="#">Masculino</a></li>
+                            <li><a class="dropdown-item text-white" href="#">Infantil</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="../HTML/cadastro.html">Cadastre-se</a>
+                    </li>
+                </ul>
+                <form class="d-flex">
+                    <input class="form-control me-2" type="search" placeholder="Pesquisar" aria-label="Search">
+                    <button class="btn btn-warning text-white" type="submit">Pesquisar</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Conteúdo Principal -->
+    <main>
+        <h1>Cadastro de Usuário</h1>
+        <form id="formulario" onsubmit="return validarFormulario()" action="conxao.php" method="post">
+            <fieldset>
+                <legend>Cadastro de Usuário</legend>
+
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <label for="nome">Nome</label>
+                        <input type="text" class="form-control" id="nome" required>
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label for="senha">Senha: </label>
+                        <input type="password" class="form-control" id="senha" required>
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label for="cpf">CPF: </label>
+                        <input type="text" class="form-control" id="cpf" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" class="form-control" id="email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="endereco">Endereço</label>
+                    <input type="text" class="form-control" id="endereco" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="bairro">Bairro</label>
+                    <input type="text" class="form-control" id="bairro" required>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <label for="cidade">Cidade: </label>
+                        <input type="text" class="form-control" id="cidade">
+                    </div>
+
+                    <div class="form-group col-md-4">
+                        <label for="estado">Estado: </label>
+                        <select id="estado" class="form-control">
+                            <option value="">Selecione um Estado</option>
+                            <!-- Lista de estados e DF -->
+                            <option value="AC">Acre</option>
+                            <option value="AL">Alagoas</option>
+                            <option value="AP">Amapá</option>
+                            <option value="AM">Amazonas</option>
+                            <option value="BA">Bahia</option>
+                            <option value="CE">Ceará</option>
+                            <option value="DF">Distrito Federal</option>
+                            <option value="ES">Espírito Santo</option>
+                            <option value="GO">Goiás</option>
+                            <option value="MA">Maranhão</option>
+                            <option value="MT">Mato Grosso</option>
+                            <option value="MS">Mato Grosso do Sul</option>
+                            <option value="MG">Minas Gerais</option>
+                            <option value="PA">Pará</option>
+                            <option value="PB">Paraíba</option>
+                            <option value="PR">Paraná</option>
+                            <option value="PE">Pernambuco</option>
+                            <option value="PI">Piauí</option>
+                            <option value="RJ">Rio de Janeiro</option>
+                            <option value="RN">Rio Grande do Norte</option>
+                            <option value="RS">Rio Grande do Sul</option>
+                            <option value="RO">Rondônia</option>
+                            <option value="RR">Roraima</option>
+                            <option value="SC">Santa Catarina</option>
+                            <option value="SP">São Paulo</option>
+                            <option value="SE">Sergipe</option>
+                            <option value="TO">Tocantins</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group col-md-2">
+                        <label for="cep">CEP: </label>
+                        <input type="text" class="form-control" id="cep" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="termos" required>
+                        <label class="form-check-label" for="termos">
+                            Concordo que li e aceito os <a href="../HTML/Termos.html" class="text-decoration-none">Termos e Políticas</a>
+                        </label>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-dark">Enviar</button>
+            </fieldset>
+        </form>
+    </main>
+
+    <!-- Scripts Bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
