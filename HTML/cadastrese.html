@@ -4,7 +4,13 @@
         <meta charset="utf-8" lang="pt-br">
         <title>Cadastro</title>
         <link rel="stylesheet" type="Text/CSS" href="../CSS/style.css">
- 
+      <script>
+        function valida(){
+          let email = document.getElementById("email").value.trim();
+          let maquina = document.getElementById("senha").value.trim();
+          let descrição = document.getElementById("")
+        }
+      </script>
    </head>
    <body>
         <header>
@@ -23,6 +29,8 @@
            </div>
         </header>
             
+       
+        <nav class="navbar navbar-expand-lg bg-dark">
              <nav class="navbar navbar-expand-lg bg-dark">
   <div class="container-fluid">
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -44,8 +52,8 @@
             Nossos Produtos 
           </a>
           <ul class="dropdown-menu bg-dark">
-            <li><a class="dropdown-item" href="#" style="color: #4EEFD9; background-color: rgb(48, 47, 45);">Produtos de corte</a></li>
-            <li><a class="dropdown-item" href="#" style="color: #4EEFD9; background-color: rgb(48, 47, 45);">Chaves de acesso</a></li>
+            <li><a class="dropdown-item" href="#" style="color: #4EEFD9; background-color: rgb(48, 47, 45);">Windows</a></li>
+            <li><a class="dropdown-item" href="#" style="color: #4EEFD9; background-color: rgb(48, 47, 45);">Linux(em breve)</a></li>
           </ul>
         </li>
       </ul>
@@ -67,6 +75,10 @@
          </div>
          <div class="col-md-6">
               <label for="inputPassword4" class="form-label">Senha</label>
+              <input type="password" class="form-control" id="inputPassword4">
+         </div>
+         <div class="col-md-6">
+              <label for="" class="form-label">Senha</label>
               <input type="password" class="form-control" id="inputPassword4">
          </div>
          <div class="col-md-6">
@@ -97,13 +109,13 @@
          <div class="col-12">
          <div class="form-check">
             <input class="form-check-input" type="checkbox" id="termos" required>
-           <a href="../HTML/politica-de-privacidade.html> <label class="form-check-label" for="gridCheck">
+           <a href="../HTML/termos-de-uso.html"> <label class="form-check-label" for="gridCheck">
             Termos e Condições
-            </label></a>
+           </a> </a>  </label>
          </div>
          </div>
          <div class="col-12">
-             <button type="submit" class="btn btn-primary">Entrar</button>
+             <button type="submit" class="btn" style="background-color: #4EEFD9; color: black;">Entrar</button>
          </div>
             </form>
             
