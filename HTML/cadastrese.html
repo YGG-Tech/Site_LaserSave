@@ -1,37 +1,116 @@
 <!DOCTYPE html>
 <HTML>
-   <head>
-        <meta charset="utf-8" lang="pt-br">
-        <title>Cadastro</title>
-        <link rel="stylesheet" type="Text/CSS" href="../CSS/style.css">
-      <script>
-        function valida(){
-          let email = document.getElementById("email").value.trim();
-          let maquina = document.getElementById("senha").value.trim();
-          let descrição = document.getElementById("")
-        }
-      </script>
-   </head>
-   <body>
-        <header>
-           <div class="container">
-                <div class="item">
-                    <img src="../IMAGE/laser png.png" width="80px" height="70px" >
-                </div>
-                <div class="item">
-                    <h2>Laser Save</h2>
-                    <h2>O seu melhor app de corte a Laser</h2>
-                </div>
 
-                <div class="item">
+<head>
+  <meta charset="utf-8" lang="pt-br">
+  <title>Cadastro</title>
+  <link rel="stylesheet" type="text/CSS" href="../CSS/style.css">
+  <script>
 
-                </div>
-           </div>
-        </header>
-            
-       
-        <nav class="navbar navbar-expand-lg bg-dark">
-             <nav class="navbar navbar-expand-lg bg-dark">
+    function valida() {
+      let nome = document.getElementById("nome").value.trim();
+      let email = document.getElementById("email").value.trim();
+      let senha = document.getElementById("senha").value.trim();
+      let cpf = document.getElementById("cpf").value.trim();
+      let
+
+      if (nome.length < 3 || nome === "") {
+        alert("Volte ao campo nome e digite corretamente.");
+        return false;
+      }
+      if (email.length < 3 || email === "") {
+        alert("Email incorreto, digite novamente.");
+        return false;
+      }
+      if (senha.length < 6 || senha === "") {
+        alert("Senha inválida, tente novamente.");
+        return false;
+      }
+      if (cpf.length < 10 || cpf === "") {
+        alert("CPF inválido, tente novamente.");
+        return false;
+      }
+      if (endereco.length < 3 || endereco === "") {
+        alert("Endereço inválido, tente novamente.");
+        return false;
+      }
+      if (cep.length < 8 || cep === "") {
+        alert("CEP inválido, tente novamente.");
+        return false;
+      }
+
+      let termos = document.getElementById("termos").checked;
+      if (!termos) {
+        alert("Você precisa aceitar os Termos e Condições.");
+        return false;
+      }
+
+      // Se todos os campos forem válidos
+      alert("Cadastro realizado com sucesso!");
+      return true;
+    }
+
+    // Função para validar CPF
+    function validaCPF(cpf) {
+      var Soma = 0;
+      var Resto;
+      var strCPF = cpf.replace(/[^\d]/g, ''); // Remove tudo que não é número
+
+      if (strCPF.length !== 11) return false;
+
+      if ([
+        '00000000000', '11111111111', '22222222222', '33333333333',
+        '44444444444', '55555555555', '66666666666', '77777777777',
+        '88888888888', '99999999999'
+      ].includes(strCPF)) return false;
+
+      // Primeiro dígito
+      for (let i = 1; i <= 9; i++) {
+        Soma += parseInt(strCPF.charAt(i - 1)) * (11 - i);
+      }
+      Resto = (Soma * 10) % 11;
+      if (Resto >= 10) Resto = 0;
+      if (Resto !== parseInt(strCPF.charAt(9))) return false;
+
+      // Segundo dígito
+      Soma = 0;
+      for (let i = 1; i <= 10; i++) {
+        Soma += parseInt(strCPF.charAt(i - 1)) * (12 - i);
+      }
+      Resto = (Soma * 10) % 11;
+      if (Resto >= 10) Resto = 0;
+
+      return Resto === parseInt(strCPF.charAt(10));
+    }
+
+    // Função para validar o formulário e o CPF
+    function validarFormulario() {
+      let cpf = document.getElementById("cpf").value;
+
+      if (!validaCPF(cpf)) {
+        alert("CPF inválido!");
+        return false; // impede envio
+      }
+
+      return true; // permite envio
+    }
+  </script>
+</head>
+
+<body>
+  <header>
+    <div class="container">
+      <div class="item">
+        <img src="../IMAGE/laser png.png" width="80px" height="70px">
+      </div>
+      <div class="item">
+        <h2>Laser Save</h2>
+        <h2>O seu melhor app de corte a Laser</h2>
+      </div>      
+    </div>
+  </header>
+
+     <nav class="navbar navbar-expand-lg bg-dark">
   <div class="container-fluid">
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon" style="color: #4EEFD9;">Menu</span>
@@ -40,7 +119,8 @@
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
          <a class="nav-link active" aria-current="page" href="../HTML/Home.html" style="color: #4EEFD9;">Home</a>
-        </li> 
+        </li>
+         
         <li class="nav-item">
           <a class="nav-link active" href="../HTML/cadastrese.html" style="color: #4EEFD9;">Cadastre-se</a>
         </li>
@@ -49,15 +129,15 @@
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color: #4EEFD9;background-color: rgb(48, 47, 45) ">
-            Nossos Produtos 
+           Download
           </a>
           <ul class="dropdown-menu bg-dark">
-            <li><a class="dropdown-item" href="#" style="color: #4EEFD9; background-color: rgb(48, 47, 45);">Windows</a></li>
+            <li><a class="dropdown-item" href="../HTML/DownloadWin.html" style="color: #4EEFD9; background-color: rgb(48, 47, 45);">Windows</a></li>
             <li><a class="dropdown-item" href="#" style="color: #4EEFD9; background-color: rgb(48, 47, 45);">Linux(em breve)</a></li>
           </ul>
         </li>
       </ul>
-      <form class="d-flex" role="search">
+        <form class="d-flex" role="search">
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
         <button class="btn btn-outline-dark" style="background-color: #4EEFD9;" type="submit">Pesquisar</button>
       </form>
@@ -66,93 +146,98 @@
 
 </nav>
 
-        <main style="padding: 400px;">
-            <H1>Cadastro de Usuário</H1>
-            <form class="row g-3">
-         <div class="col-md-6">
-             <label for="inputEmail4" class="form-label">Email</label>
-             <input type="email" class="form-control" id="inputEmail4">
-         </div>
-         <div class="col-md-6">
-              <label for="inputPassword4" class="form-label">Senha</label>
-              <input type="password" class="form-control" id="inputPassword4">
-         </div>
-         <div class="col-md-6">
-              <label for="" class="form-label">Senha</label>
-              <input type="password" class="form-control" id="inputPassword4">
-         </div>
-         <div class="col-md-6">
-           <label for="inputDesc" class="form-label">Descrição</label>
-            <input type="text" class="form-control" id="inputdescr">
-         </div>
-         <div class="col-md-4">
-            <label for="inputState" class="form-label">Maquina</label>
-            <select id="inputState" class="form-select">
+
+    <main style="padding: 400px;">
+      <H1>Cadastro de Usuário</H1>
+      <form class="row g-3">
+        <div class="col-md-6">
+          <label for="inputEmail4" class="form-label">Email</label>
+          <input type="email" class="form-control" id="inputEmail4">
+        </div>
+        <div class="col-md-6">
+          <label for="inputPassword4" class="form-label">Senha</label>
+          <input type="password" class="form-control" id="inputPassword4">
+        </div>
+        <div class="col-md-6">
+          <label for="inputDesc" class="form-label">Descrição</label>
+          <input type="text" class="form-control" id="inputdescr">
+        </div>
+        <div class="col-md-4">
+          <label for="inputState" class="form-label">Maquina</label>
+          <select id="inputState" class="form-select">
             <option selected>Selecione um laser</option>
             <option>Laser Z1 Engraver</option>
             <option>SCULPFUN S9</option>
             <option>Nagano</option>
             <option>Mecolour</option>
-            </select>
-         </div>
-         <div class="col-md-2">
-            <label for="inputPot" class="form-label">Potencia</label>
-             <select id="inputState" class="form-select">
+          </select>
+        </div>
+        <div class="col-md-2">
+          <label for="inputPot" class="form-label">Potencia</label>
+          <select id="inputState" class="form-select">
             <option selected>Selecione a Potencia</option>
             <option>5W</option>
             <option>10W</option>
             <option>20W</option>
             <option>80W</option>
             <option>90W</option>
-            </select>
-         </div>
-         <div class="col-12">
-         <div class="form-check">
+          </select>
+        </div>
+        <div class="col-12">
+          <div class="form-check">
             <input class="form-check-input" type="checkbox" id="termos" required>
-           <a href="../HTML/termos-de-uso.html"> <label class="form-check-label" for="gridCheck">
-            Termos e Condições
-           </a> </a>  </label>
-         </div>
-         </div>
-         <div class="col-12">
-             <button type="submit" class="btn" style="background-color: #4EEFD9; color: black;">Entrar</button>
-         </div>
-            </form>
-            
+            <a href="../HTML/termos-de-uso.html"> <label class="form-check-label" for="gridCheck">
+                Termos e Condições
+            </a> </a> </label>
+          </div>
+        </div>
+        <div class="col-12">
+          <button type="submit" class="btn" style="background-color: #4EEFD9; color: black;">Entrar</button>
+        </div>
+      </form>
 
-        </main>
-      
-      
-        <footer>
-            <div class="container">
-                <div class="item">
-                    <a href="../HTML/FAQ.html" style="text-decoration: none; display: block; text-align: left; color: antiquewhite;">FAQ</a>
-                    <a href="../HTML/Equipe.html" style="text-decoration: none; display: block; text-align: left; color: antiquewhite;">Equipe</a>
-                    <a href="#" style="text-decoration: none; display: block; text-align: left; color: antiquewhite;">Nossos Horários</a>
-                </div>
-                 <div class="item">
-                    <h2>siga-nos nas redes sociais:</h2>
-                    <i class="bi bi-facebook"><a href="https://www.facebook.com"><img src="../IMAGE/facebook.svg" width="40" height="40"></a></i>   
-                    <i class="bi bi-instagram"><a href="https://www.instagram.com"><img src="../IMAGE/instagram.svg" width="40" height="40"></a></i>     
-                    <i class="bi bi-linkedin"><a href="https://www.linkedin.com"><img src="../IMAGE/linkedin.svg" width="40" height="40" ></a></i>      
-                    <br>
-                    <br>
-                    <br>
-                    <br>  
-                    <copy>©2025. Todos os direitos reservados</copy>
 
-                 </div >
-                 <div class="item">
-                        <a target="_blank" href="https://maps.app.goo.gl/3Mj58SkxkftCcVom8">
-                            <img src="../IMAGE/istockphoto-1148705812-612x612-removebg-preview.png" width="45" height="50">
-                            <p>Onde nos Encontrar</p>
-                        </a>
-                 </div>
+    </main>
 
-            </div>
-             
-        </footer>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
-   </body> 
+
+    <footer>
+      <div class="container">
+        <div class="item">
+          <a href="../HTML/FAQ.html"
+            style="text-decoration: none; display: block; text-align: left; color: antiquewhite;">FAQ</a>
+          <a href="../HTML/Equipe.html"
+            style="text-decoration: none; display: block; text-align: left; color: antiquewhite;">Equipe</a>
+          <a href="#" style="text-decoration: none; display: block; text-align: left; color: antiquewhite;">Nossos
+            Horários</a>
+        </div>
+        <div class="item">
+          <h2>siga-nos nas redes sociais:</h2>
+          <i class="bi bi-facebook"><a href="https://www.facebook.com"><img src="../IMAGE/facebook.svg" width="40"
+                height="40"></a></i>
+          <i class="bi bi-instagram"><a href="https://www.instagram.com"><img src="../IMAGE/instagram.svg" width="40"
+                height="40"></a></i>
+          <i class="bi bi-linkedin"><a href="https://www.linkedin.com"><img src="../IMAGE/linkedin.svg" width="40"
+                height="40"></a></i>
+          <br>
+          <br>
+          <br>
+          <br>
+          <copy>©2025. Todos os direitos reservados</copy>
+
+        </div>
+        <div class="item">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4290.256771035964!2d-51.2188929!3d-30.0428357!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x951978567f17f28d%3A0x2c2c5272bacf4d3a!2sSenac%20Tech!5e1!3m2!1spt-BR!2sbr!4v1770648736633!5m2!1spt-BR!2sbr" width="300" height="250" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+          </a>
+        </div>
+
+      </div>
+
+    </footer>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+      crossorigin="anonymous"></script>
+</body>
+
 </HTML>
