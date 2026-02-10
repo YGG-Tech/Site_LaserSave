@@ -8,14 +8,14 @@
   <script>
 
     function valida() {
-      let nome = document.getElementById("nome").value.trim();
+      let descricao = document.getElementById("descricao").value.trim();
       let email = document.getElementById("email").value.trim();
       let senha = document.getElementById("senha").value.trim();
-      let cpf = document.getElementById("cpf").value.trim();
-      let
+      let maquina = document.getElementById("maquina").value.trim();
+      let potencia = document.getElementById("potencia").value.trim();      
 
-      if (nome.length < 3 || nome === "") {
-        alert("Volte ao campo nome e digite corretamente.");
+      if (descricao.length < 3 || descricao === "") {
+        alert("Volte ao campo descrição e digite corretamente.");
         return false;
       }
       if (email.length < 3 || email === "") {
@@ -26,18 +26,7 @@
         alert("Senha inválida, tente novamente.");
         return false;
       }
-      if (cpf.length < 10 || cpf === "") {
-        alert("CPF inválido, tente novamente.");
-        return false;
-      }
-      if (endereco.length < 3 || endereco === "") {
-        alert("Endereço inválido, tente novamente.");
-        return false;
-      }
-      if (cep.length < 8 || cep === "") {
-        alert("CEP inválido, tente novamente.");
-        return false;
-      }
+    
 
       let termos = document.getElementById("termos").checked;
       if (!termos) {
@@ -50,51 +39,18 @@
       return true;
     }
 
-    // Função para validar CPF
-    function validaCPF(cpf) {
-      var Soma = 0;
-      var Resto;
-      var strCPF = cpf.replace(/[^\d]/g, ''); // Remove tudo que não é número
-
-      if (strCPF.length !== 11) return false;
-
-      if ([
-        '00000000000', '11111111111', '22222222222', '33333333333',
-        '44444444444', '55555555555', '66666666666', '77777777777',
-        '88888888888', '99999999999'
-      ].includes(strCPF)) return false;
-
-      // Primeiro dígito
-      for (let i = 1; i <= 9; i++) {
-        Soma += parseInt(strCPF.charAt(i - 1)) * (11 - i);
-      }
-      Resto = (Soma * 10) % 11;
-      if (Resto >= 10) Resto = 0;
-      if (Resto !== parseInt(strCPF.charAt(9))) return false;
-
-      // Segundo dígito
-      Soma = 0;
-      for (let i = 1; i <= 10; i++) {
-        Soma += parseInt(strCPF.charAt(i - 1)) * (12 - i);
-      }
-      Resto = (Soma * 10) % 11;
-      if (Resto >= 10) Resto = 0;
-
-      return Resto === parseInt(strCPF.charAt(10));
-    }
-
-    // Função para validar o formulário e o CPF
-    function validarFormulario() {
-      let cpf = document.getElementById("cpf").value;
-
-      if (!validaCPF(cpf)) {
-        alert("CPF inválido!");
-        return false; // impede envio
-      }
-
-      return true; // permite envio
-    }
+    
   </script>
+    <div vw class="enabled">
+        <div vw-access-button class="active"></div>
+        <div vw-plugin-wrapper>
+            <div class="vw-plugin-top-wrapper"></div>
+        </div>
+    </div>
+    <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+    <script>
+        new window.VLibras.Widget('https://vlibras.gov.br/app');
+    </script>
 </head>
 
 <body>

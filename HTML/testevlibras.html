@@ -1,0 +1,55 @@
+libras: <!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minha Página com VLibras</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; line-height: 1.6; }
+        .container { max-width: 800px; margin: auto; text-align: center; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Bem-vindo ao Teste do VLibras</h1>
+        <p>Esta é uma página simples para mostrar o funcionamento do widget de acessibilidade.</p>
+        <p>Clique no ícone azul à direita para ativar o intérprete virtual!</p>
+    </div>
+
+    <!-- INÍCIO DO CÓDIGO VLIBRAS -->
+    <div vw class="enabled">
+        <div vw-access-button class="active"></div>
+        <div vw-plugin-wrapper>
+            <div class="vw-plugin-top-wrapper"></div>
+        </div>
+    </div>
+    <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+    <script>
+        new window.VLibras.Widget('https://vlibras.gov.br/app');
+    </script>
+    <!-- FIM DO CÓDIGO VLIBRAS -->
+
+</body>
+</html>
+
+<!-- Início da estrutura visual do Widget
+<div vw class="enabled">
+    Botão de acessibilidade que fica flutuando na tela -->
+    <!-- <div vw-access-button class="active"></div> -->
+    
+    <!-- Container que envolverá a janela do boneco (avatar) após o clique -->
+    <!-- <div vw-plugin-wrapper> -->
+      <!-- Elemento de controle interno da parte superior do plugin -->
+      <!-- <div class="vw-plugin-top-wrapper"></div>
+    </div>
+  </div> -->
+  
+  <!-- Importação do script principal hospedado nos servidores do governo -->
+  <!-- <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+  
+  <script>
+    Instancia e inicializa o componente passando a URL base dos ativos do projeto -->
+    <!-- new window.VLibras.Widget('https://vlibras.gov.br/app');
+  </script> -->
+   -- Todas as páginas devem conter acessibilidade
